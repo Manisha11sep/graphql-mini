@@ -52,11 +52,13 @@ Now let's require these dependencies in the server and have our app use it
 - the first argument should be an endpoint `/graphql` and the second argument should be `graphQLExpress` invoked with a configuration Object as an argument
 - inside the configuration Object, a `schema` property must be provided, and the value will be our schema
 
-<code> server/index.js </code>
+<details>
+<summary><code> server/index.js </code></summary>
 ```js
 // server/index.js
 const graphQLExpress = require('express-graphql')
 // ...
 
 ```
+</details>
 
