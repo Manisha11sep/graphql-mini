@@ -37,6 +37,7 @@
 - Starting with the server side, we need to add our dependencies
 
 #### Instructions
+- `yarn add graphql`
 - `yarn add express-graphql graphql`
   - `express-graphql` is server middleware where we can set an endpoint for GraphQL
 
@@ -50,6 +51,8 @@ Now let's require these dependencies in the server and have our app use it
 - apply `graphQLExpress` as top-level middleware as a route handler
 - the first argument should be an endpoint `/graphql` and the second argument should be `graphQLExpress` invoked with a configuration Object as an argument
 - inside the configuration Object, a `schema` property must be provided, and the value will be our schema
+
+<code> server/index.js </code>
 ```js
 // server/index.js
 const graphQLExpress = require('express-graphql')
