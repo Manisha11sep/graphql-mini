@@ -37,5 +37,23 @@
 - Starting with the server side, we need to add our dependencies
 
 #### Instructions
-- `yarn add express express-graphql body-parser axios cors`
-  - `express-graphql` is server middleware which provides functions to interact with the GraphQL query language in JavaScript
+- `yarn add express-graphql graphql`
+  - `express-graphql` is server middleware where we can set an endpoint for GraphQL
+
+### Step 2  
+
+#### Summary  
+Now let's require these dependencies in the server and have our app use it
+
+#### Instructions
+- require `express-graphql` as `graphQLExpress` in your server
+- apply `graphQLExpress` as top-level middleware as a route handler
+- the first argument should be an endpoint `/graphql` and the second argument should be `graphQLExpress` invoked with a configuration Object as an argument
+- inside the configuration Object, a `schema` property must be provided, and the value will be our schema
+```js
+// server/index.js
+const graphQLExpress = require('express-graphql')
+// ...
+
+```
+

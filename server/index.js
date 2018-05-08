@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const graphQLExpress = require('express-graphql')
 const PORT = 3050
 
 const app = express()
