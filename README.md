@@ -33,8 +33,9 @@
 - Fork and clone this repository
 - Run `yarn` or `npm install`
 
-### Step 1  
-
-#### Summary
+### Step 1
+- Starting with the server side, we need to add our dependencies
 
 #### Instructions
+- `yarn add express express-graphql body-parser axios cors`
+  - `express-graphql` is server middleware
