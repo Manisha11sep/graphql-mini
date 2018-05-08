@@ -38,4 +38,4 @@
 
 #### Instructions
 - `yarn add express express-graphql body-parser axios cors`
-  - `express-graphql` is server middleware
+  - `express-graphql` is server middleware which provides functions to interact with the GraphQL query language in JavaScript
