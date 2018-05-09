@@ -253,7 +253,7 @@ Our data is full of Star Wars characters so let's create a `people` query so we 
 
 <details>
 
-<summary><code></code></summary>
+<summary><code> server/schema.js </code></summary>
 
 ```js
 // server/schema.js
@@ -262,12 +262,14 @@ const Query = new GraphQLObjectType({
   name: 'Query',
   fields: () => {
     return {
+      // new code
       people: {
         type: new GraphQLList(PersonType),
         resolve: () => {
           return characters
         }
       }
+      // end new code
     }
   }
 })
