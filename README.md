@@ -58,7 +58,6 @@ Now let's require these dependencies in the server and have our app use it
 // server/index.js
 const graphQLExpress = require('express-graphql')
 // ...
-
-```
+```  
 </details>
 
