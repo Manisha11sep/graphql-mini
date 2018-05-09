@@ -130,9 +130,7 @@ Let's setup our schema, where most of our logic will take place
 - we need to access our data, so `require` our `server/graphql/model.js` inside `schema.js`  
 
 - we need to require `graphql` and destructure a handful of functions
-  - `{ GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLNonNull }`  
-
-- at the bottom of our `schema.js` let's export a `new GraphQLSchema({ query: Query })`  
+  - `{ GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLNonNull }`
 
 #### Solution  
 
@@ -201,7 +199,14 @@ Back to `schema.js`, we are going to create our root query Object
 - inside the `GraphQLObjectType`, provide it an Object with:
   - a `name` property equal to `Query`  
   - a `fields` property equal to a function that returns an Object
-    - this is where we declare the queries available on the API
+    - this is where we declare the queries available on the API  
+
+- at the bottom of `schema.js` let's export:
+```js
+module.exports = new GraphQLSchema({
+  query: Query // <-- our Query variable
+})
+```
 
 #### Solution
 
@@ -219,6 +224,10 @@ const Query = new GraphQLObjectType({
       // define the keyword queries
     }
   }
+})
+
+module.exports = new GraphQLSchema({
+  query: Query
 })
 ```
 
