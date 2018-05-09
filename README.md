@@ -54,6 +54,8 @@ Now let's require these dependencies in the server and have our app use it
   - a `schema` property must be provided, and the value will be our schema, for now set it to `null`
   - a `graphiql` property which takes a `boolean` and will enable or disable a user interface to quickly test queries. Let's set this to `true`
 
+#### Solution  
+
 <details>  
   
 <summary><code> server/index.js </code></summary>  
@@ -66,7 +68,20 @@ app.use('/graphql', graphQLExpress({
   schema: null,
   graphiql: true
 }))
+// ...
 ```  
 
-</details>
+</details>  
+
+### Step 3  
+
+#### Summary  
+Let's setup our query file, where most of our logic will take place
+
+
+#### Instructions  
+- inside `server/graphql`, create a file named `schema.js`
+- we need to access our data, so `require` our `server/graphql/model.js` inside `schema.js`
+- let's also take another look at our `server/index.js` file and `require` our newly created `schema.js` file then add this to the schema property inside of the configuration Object
+- we need to bring in 
 
