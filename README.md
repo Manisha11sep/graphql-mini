@@ -992,6 +992,93 @@ ReactDOM.render(
 
 #### Summary  
 
+lets start with the `PeopleQuery` component, we need to create the query and render the `Query` component provided by `react-apollo`
+
+#### Instructions  
+
+- create a stateless component `PeopleQuery`
+
+- `import { Query } from 'react-apollo'` && `import gql from 'graphql-tag'`
+  - graphql-tag will allow us to write a template literal tag, explained by example inside `templateLiteralTagExample.js`
+
+- below our imports but above our component, create a variable `GET_PEOPLE` and set it equal to our people query with our desired properties:
+```js
+// using a template literal tag, we can write in GraphQL query language
+const GET_PEOPLE = gql`
+  query getPeople {
+    people {
+      id
+      name
+      height
+      films {
+        title
+      }
+      homeWorld {
+        name
+      }
+    }
+  }
+`
+```
+
+- return the `Query` component inside `PeopleQuery` that takes a `query` prop equal to `GET_PEOPLE`
+
+- provide a function to the `Query` children prop to determine what to render
+  - `react-apollo` uses the render prop pattern
+
+- the function should take in an Object that has `loading, error, data` properties
+  - `ApolloClient` tracks error and loading state for you, which will be reflected in the `loading` and `error` properties
+  - once the query comes back it is attached to the `data` property
+
+#### Solution
+
+<details>
+
+<summary><code></code></summary>
+
+```js
+// queries/PeopleQuery.js
+import React from 'react'
+import { Query } from 'react-apollo'
+import gql from 'graphql-tag'
+
+const GET_PEOPLE = gql`
+  query getPeople {
+    people {
+      id
+      name
+      height
+      films {
+        title
+      }
+      homeWorld {
+        name
+      }
+    }
+  }
+`
+
+const PeopleQuery = props => {
+  return (
+    <Query query={ GET_PEOPLE }>
+      {
+        (loading, error, data) => {
+          // code
+        }
+      }
+    </Query>
+  )
+}
+
+export default PeopleQuery
+```
+
+</details>
+
+### Step 5
+
+#### Summary  
+
 #### Instructions  
 
 #### Solution

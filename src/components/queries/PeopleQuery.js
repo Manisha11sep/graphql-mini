@@ -10,12 +10,9 @@ const GET_PEOPLE = gql`
       height
       films {
         title
-        releaseDate
       }
       homeWorld {
         name
-        climate
-        population
       }
     }
   }
@@ -24,34 +21,11 @@ const GET_PEOPLE = gql`
 const PeopleQuery = props => {
   return (
     <Query query={ GET_PEOPLE }>
-
       {
-        ({ loading, error, data }) => {
-          console.log(data)
-          if(loading) {
-            return (
-              <div>
-                <img className='le-image'          
-                  src="https://media.giphy.com/media/GIEXgLDfghUSQ/giphy.gif" 
-                  alt="Loading"
-                />
-              </div>
-            )
-          }
-          if(error) {
-            return (
-              <div>
-                <img className='le-image'
-                  src="http://www.fico.com/en/blogs/wp-content/uploads/2017/03/Lack-of-Data.gif"
-                  alt="error"
-                />
-              </div>
-            )
-          }
-          return props.render(data)
+        (loading, error, data) => {
+          // code
         }
       }
-
     </Query>
   )
 }
