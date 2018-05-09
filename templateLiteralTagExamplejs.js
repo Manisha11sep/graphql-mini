@@ -19,7 +19,7 @@ const myTag = (strings, ...vals) => {
   return str
 }
 
-const result = myTag `${greeting} ${name}, how are you?`
+const result = myTag`${greeting} ${name}, how are you?`
 console.log(result)
 
 

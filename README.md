@@ -122,6 +122,43 @@ app.use('/graphql', graphQLExpress({
 // ...
 ```  
 
+</details>  
+
+### Step 4  
+
+#### Summary  
+These functions we have `required` from `graphql` are going to help us define our types when we create our `GraphQLSchema`.
+>>> Schema: A representation of a plan or theory in the form of an outline or model  
+
+#### Instructions  
+
+#### Solution  
+<details>
+<summary><code> server/schema.js </code></summary>
+
+```js
+// server/schema.js
+// ...
+
+```
+
+</details>
+
+### Step 4  
+
+#### Summary
+
+#### Instructions  
+
+#### Solution  
+<details>
+<summary><code></code></summary>
+
+```js
+// ...
+
+```
+
 </details>
 
 
