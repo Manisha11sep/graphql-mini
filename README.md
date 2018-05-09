@@ -48,7 +48,7 @@ Now let's require these dependencies in the server and have our app use it
 
 #### Instructions
 - require `express-graphql` as `graphQLExpress` in your server
-- apply `graphQLExpress` as top-level middleware as a route handler
+- apply `graphQLExpress` as top-level middleware as a route handler > `app.use()`
 - the first argument should be an endpoint `/graphql` and the second argument should be `graphQLExpress` invoked with a configuration Object as an argument
 - inside the configuration Object:
   - a `schema` property must be provided, and the value will be our schema, for now set it to `null`
