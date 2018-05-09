@@ -586,3 +586,55 @@ module.exports = new GraphQLSchema({
 ```
 
 </details>
+
+### Step 12
+
+#### Summary 
+
+now lets add a `homeWorld` field to the `PersonType` 
+
+#### Instructions  
+
+- set the `type` for the `homeWorld` property to the `HomeWorldType`
+
+- add a `resolve` function with a `person` parameter so we can make another axios call to get the homeworld details from the original API
+
+#### Solution
+
+<details>
+
+<summary><code></code></summary>
+
+```js
+// server/schema.js
+// ...
+const PersonType = new GraphQLObjectType({
+  name: 'Person',
+  fields: () => {
+    return {
+      id: { type: GraphQLInt },
+      name: { type: GraphQLString },
+      height: { type: GraphQLInt },
+      films: {
+        type: new GraphQLList(MovieType),
+        resolve: (person) => {
+          return !person.films.length 
+          ? []
+          : person.films.map(film => {
+            return axios.get(film).then(res => res.data)
+          }) 
+        }
+      },
+      homeWorld: {
+        type: HomeWorldType,
+        resolve: (person) => {
+          return axios.get(person.homeworld).then(res => res.data)
+        }
+      }
+    }
+  }
+})
+// ...
+```
+
+</details>

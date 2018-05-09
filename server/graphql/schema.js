@@ -26,6 +26,13 @@ const PersonType = new GraphQLObjectType({
             return axios.get(film).then(res => res.data)
           }) 
         }
+      },
+      homeWorld: {
+        type: HomeWorldType,
+        resolve: (person) => {
+          console.log('A SINGLE PERSON OBJECT FROM THE DATA', person)
+          return axios.get(person.homeworld).then(res => res.data)
+        }
       }
     }
   }
