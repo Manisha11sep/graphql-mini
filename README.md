@@ -82,7 +82,7 @@ Let's setup our query file, where most of our logic will take place
 #### Instructions  
 - inside `server/graphql`, create a file named `schema.js`
 - we need to access our data, so `require` our `server/graphql/model.js` inside `schema.js`
-- we need to `require` `graphql` along with a handful of functions
+- we need to `require` `graphql` and destructure a handful of functions
   - GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLNonNull
 - let's also take another look at our `server/index.js` file and `require` our newly created `schema.js` file then add this to the schema property inside of the configuration Object
 
