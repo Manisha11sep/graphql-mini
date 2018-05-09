@@ -36,13 +36,13 @@ module.exports = new GraphQLSchema({
     //   }
     // }
 
-// const PersonType = new GraphQLObjectType({
-//   name: 'Person',
-//   fields: () => {
-//     return {
-//       id: { type: GraphQLInt },
-//       name: { type: GraphQLString },
-//       height: { type: GraphQLInt }
-//     }
-//   }
-// })
+const PersonType = new GraphQLObjectType({
+  name: 'Person',
+  fields: () => {
+    return {
+      id: { type: GraphQLInt },
+      name: { type: GraphQLString },
+      height: { type: GraphQLInt }
+    }
+  }
+})

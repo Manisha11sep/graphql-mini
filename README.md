@@ -262,14 +262,62 @@ const Query = new GraphQLObjectType({
   name: 'Query',
   fields: () => {
     return {
-      // new code
+    // start new code
       people: {
         type: new GraphQLList(PersonType),
         resolve: () => {
           return characters
         }
       }
-      // end new code
+    // end new code
+    }
+  }
+})
+// ...
+```
+
+</details>  
+
+### Step 6
+
+### Summary  
+
+We need to define our `PersonType` so our `people` query knows how to structure the data properly
+
+### Instructions  
+
+- create a variable called `PersonType` and set it equal to a `new GraphQLObjectType()`  
+
+```js
+const PersonType = new GraphQLObjectType({
+  // ...code
+})
+```
+
+- add a `name` property and set it equal to a string `Person`  
+
+- add a `fields` property so we can set the fields available on the `PersonType`
+
+- in `fields` for now, include `id, name, height` properties
+
+- these properties require a `type` definition 
+
+### Solution
+
+<details>
+
+<summary><code> server/schema.js </code></summary>
+
+```js
+// server/schema.js
+// ...
+const PersonType = new GraphQLObjectType({
+  name: 'Person',
+  fields: () => {
+    return {
+      id: { type: GraphQLInt },
+      name: { type: GraphQLString },
+      height: { type: GraphQLInt }
     }
   }
 })
