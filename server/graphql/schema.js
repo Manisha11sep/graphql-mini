@@ -19,3 +19,22 @@ const PersonType = new GraphQLObjectType({
     }
   }
 })
+
+const Query = new GraphQLObjectType({
+  name: 'Query',
+  fields: () => {
+    return {
+      person: {
+        type: PersonType,
+        args: { id: { type: new GraphQLNonNull(GraphQLInt)} },
+        resolve: (person, args) => {
+          return characters.find(e => e.id === args.id)
+        }
+      }
+    }
+  }
+})
+
+module.exports = new GraphQLSchema({
+  query: Query
+})

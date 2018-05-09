@@ -1,5 +1,15 @@
 ## Star Wars + GraphQL / Apollo / React
 
+### What is GraphQL?  
+
+>??GraphQL is a data query language for APIs and a runtime for fulfilling those queries with your existing data. GraphQL gives clients the power to ask for exactly what they need and nothing more, and enables powerful developer tools (Graphiql).  
+
+>>>GraphQL APIs are organized in terms of types and fields, not endpoints. It uses types to ensure a client only asks for what's possible and provides clear and helpful errors.
+
+### What is Apollo?  
+
+>>>Apollo Client is a library that was built for seemlessly interacting with GraphQL on the client side.
+
 ### Server Dependencies
 - `express`
 - `body-parser`
