@@ -603,7 +603,7 @@ now lets add a `homeWorld` field to the `PersonType`
 
 <details>
 
-<summary><code></code></summary>
+<summary><code> server/schema.js </code></summary>
 
 ```js
 // server/schema.js
@@ -635,6 +635,67 @@ const PersonType = new GraphQLObjectType({
   }
 })
 // ...
+```
+
+</details>
+
+### Step 13
+
+#### Summary  
+
+now that you can see how it can be used to stucture your data, let's see about mutating the data
+
+#### Instructions  
+
+- create a variable `Mutation` equal to a `new GraphQLObjectType`
+
+- set a `name` property equal to the string `Mutation`
+
+- add a `fields` function
+
+- inside the `fields` is where we declare our mutations, create a property named `deletePerson` set to an Object with `type, args, resolve` properties
+
+- the `type` field is for the return value of the `resolve`, what's being returned to the client
+
+- `args` are for setting the expected arguments to make this Mutation work
+
+- give `resolve` the `args` as a second parameter so we can access them inside the function 
+
+- add a `mutation` property to our `module.exports` and set it equal to the `Mutation` variable
+
+#### Solution
+
+<details>
+
+<summary><code> server/schema.js </code></summary>
+
+```js
+// server/schema.js
+// ...
+const Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: () => {
+    return {
+      deletePerson: {
+        type: PersonType,
+        args: { id: { type: GraphQLNonNull(GraphQLInt) } },
+        resolve: (parentVal, args) => {
+          let character = characters.find(e => e.id === args.id)
+          characters = characters.filter(person => person.id !== args.id)
+          return {
+            id: character.id,
+            name: character.name
+          }
+        }
+      }
+    }
+  }
+})
+
+module.exports = new GraphQLSchema({
+  query: Query,
+  mutation: Mutation
+})
 ```
 
 </details>

@@ -78,6 +78,27 @@ const Query = new GraphQLObjectType({
   }
 })
 
+const Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: () => {
+    return {
+      deletePerson: {
+        type: PersonType,
+        args: { id: { type: GraphQLNonNull(GraphQLInt) } },
+        resolve: (parentVal, args) => {
+          let character = characters.find(e => e.id === args.id)
+          characters = characters.filter(person => person.id !== args.id)
+          return {
+            id: character.id,
+            name: character.name
+          }
+        }
+      }
+    }
+  }
+})
+
 module.exports = new GraphQLSchema({
-  query: Query
+  query: Query,
+  mutation: Mutation
 })
