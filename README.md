@@ -103,7 +103,9 @@ let characters = require('./model')
 // ...
 ```  
 
-<summary><code> server/schema.js </code></summary>  
+</details>
+<details>
+<summary><code> server/index.js </code></summary>  
 
 ```js
 // server/index.js
