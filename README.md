@@ -890,3 +890,61 @@ module.exports = new GraphQLSchema({
 </details>
 
 ## React + Apollo
+
+### Step 1
+
+#### Summary  
+
+now moving to the client side, we need to add our dependencies
+
+#### Instructions  
+
+- `yarn add apollo-boost react-apollo graphql-tag`
+
+### Step 2
+
+#### Summary  
+
+we need to give our application access to the Apollo Client
+
+#### Instructions  
+
+- inside `src/index.js` lets import `ApolloClient` from `apollo-boost`
+ 
+- create a variable `client` and set it equal to a `new ApolloClient()`
+
+- give `ApolloClient` a configuration Object with a `uri` property set to our local server graphql endpoint `http://localhost:3050/graphql`
+
+- to test, let's import `gql` from `graphql-tag` and write a query now:
+```js
+client.query({
+	query: gql`
+		{
+			people {
+				name
+			}
+		}
+	`
+})
+	.then(res => console.log(res.data))
+```
+
+- check your developer console and you should have an array of 10 people!
+
+- now lets `import { ApolloProvider } from 'react-apollo'`
+
+- wrap `<App />` with `ApolloProvider`
+
+- give `ApolloProvider` a `client` attribute and set it equal to our `client` variable
+
+#### Solution
+
+<details>
+
+<summary><code></code></summary>
+
+```js
+
+```
+
+</details>

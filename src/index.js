@@ -2,11 +2,25 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App'
 import './index.css'
-// import ApolloClient class and give it a configuration Object
-// import ApolloProvider Component to wrap your application
+import ApolloClient from 'apollo-boost'
+import gql from 'graphql-tag'
 
-// Create ApolloClient
+const client = new ApolloClient({
+	uri: 'http://localhost:3050/graphql'
+})
 
-ReactDOM.render( 
-    <App />, document.getElementById('root')
+client.query({
+	query: gql`
+		{
+			people {
+				name
+			}
+		}
+	`
+})
+	.then(res => console.log(res.data))
+
+
+ReactDOM.render(
+	<App />, document.getElementById('root')
 )
