@@ -128,7 +128,8 @@ app.use('/graphql', graphQLExpress({
 
 #### Summary  
 These functions we have `required` from `graphql` are going to help us define our types when we create our `GraphQLSchema`.
-> Schema: A representation of a plan or theory in the form of an outline or model  
+> Schema: A representation of a plan or theory in the form of an outline or model
+
 We will now define our schema and how our data should be structured. The most basic components of a GraphQL schema are Object types, which represent a kind of Object you can fetch from your service/API and what fields it has.
 
 #### Instructions  
