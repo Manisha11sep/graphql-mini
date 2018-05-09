@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import DeletePerson from '../components/mutations/DeletePersonMutation'
+import DeletePersonMutation from '../components/mutations/DeletePersonMutation'
 
 export default class Card extends Component {
   render() {
@@ -15,7 +15,7 @@ export default class Card extends Component {
         <h4>Number of Films</h4>
         <p>{this.props.films.length}</p>
         <br />
-        <DeletePerson>
+        <DeletePersonMutation>
           { (loading, error, deletePerson) => {
             return (
               <div>
@@ -29,7 +29,7 @@ export default class Card extends Component {
               </div>
             )
           } }
-        </DeletePerson>
+        </DeletePersonMutation>
       </div>
     )
   }

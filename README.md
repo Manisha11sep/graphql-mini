@@ -1418,3 +1418,151 @@ export default DeletePerson
 ```
 
 </details>
+
+### Step 10
+
+#### Summary
+
+provide a function to render in `Mutation`
+
+#### Instructions  
+
+- insert a function inbetween the `Mutation` component tags and provide the function with `deletePerson` and destructored `loading` and `error`:
+```js
+{ (deletePerson, { loading, error }) => {
+  // code
+} }
+```
+
+- now we can give those arguments to `props.children`:
+```js
+{ (deletePerson, { loading, error }) => {
+  return (
+    <div>
+      { props.children(loading, error, deletePerson) }
+    </div>
+  )
+} }
+```
+
+#### Solution
+
+<details>
+
+<summary><code> mutations/DeletePerson.js </code></summary>
+
+```js
+// mutations/DeletePerson.js
+import React from 'react'
+import { Mutation } from 'react-apollo'
+import { gql } from 'apollo-boost'
+import { GET_PEOPLE } from '../queries/PeopleQuery'
+
+export const DELETE_PERSON = gql`
+  mutation deletePerson($id: Int!) {
+    deletePerson(id: $id) {
+      id
+      name
+    }
+  }
+`
+
+const DeletePerson = props => {
+  return (
+    <Mutation
+      mutation={ DELETE_PERSON }
+      update={(cache, { data: { deletePerson } }) => {
+        let { people } = cache.readQuery({ query: GET_PEOPLE })
+        const updatedPeople = people.filter(e => e.id !== deletePerson.id)
+        cache.writeQuery({ 
+          query: GET_PEOPLE,
+          data: { people: updatedPeople }
+        })
+      }}
+    >
+      { (deletePerson, { loading, error }) => {
+        return (
+          <div>
+            { props.children(loading, error, deletePerson) }
+          </div>
+        )
+      } }
+    </Mutation>
+  )
+}
+
+export default DeletePerson
+```
+
+</details>
+
+### Step 11
+
+#### Summary  
+
+now to implement our mutation in our `Card` component where it's rendered on each person in the people Array
+
+#### Instructions  
+
+- in `Card.js`: `import DeletePersonMutation from '../components/mutations/DeletePersonMutation'`
+
+- provide a function as `props.children` to `DeletePersonMutation`
+
+- pass in `loading`, `error`, and `deletePerson`
+
+- return a `div` with a `button` inside that has an `onClick` that uses `deletePerson`
+
+- pass `deletePerson` an Object with a `variables` property:
+```js
+onClick={ () => deletePerson({ variables: { id: this.props.id } })
+```
+
+- short circuit `loading` and `error` inside the `div`
+
+#### Solution
+
+<details>
+
+<summary><code> components/Card.js </code></summary>
+
+```js
+// components/Card.js
+import React, { Component } from 'react'
+import DeletePersonMutation from '../components/mutations/DeletePersonMutation'
+
+export default class Card extends Component {
+  render() {
+    return (
+      <div className='card'>
+        <h4>Character:</h4>
+        <p>{this.props.name}</p>
+        <p>{this.props.height}</p>
+        <br />
+        <h4>Homeworld</h4>
+        <p>{this.props.homeWorld.name}</p>
+        <br />
+        <h4>Number of Films</h4>
+        <p>{this.props.films.length}</p>
+        <br />
+        <DeletePersonMutation>
+          { (loading, error, deletePerson) => {
+            return (
+              <div>
+                <button
+                  onClick={ () => deletePerson({ variables: { id: this.props.id } }) }
+                >
+                  Delete 
+                </button>
+                { loading && <p>Loading...</p> }
+                { error && <p>Error...</p> }
+              </div>
+            )
+          } }
+        </DeletePersonMutation>
+      </div>
+    )
+  }
+}
+```
+
+</details>

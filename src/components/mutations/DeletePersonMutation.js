@@ -12,7 +12,7 @@ export const DELETE_PERSON = gql`
   }
 `
 
-const DeletePerson = props => {
+const DeletePersonMutation = props => {
   return (
     <Mutation
       mutation={ DELETE_PERSON }
@@ -36,4 +36,4 @@ const DeletePerson = props => {
   )
 }
 
-export default DeletePerson
+export default DeletePersonMutation
