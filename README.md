@@ -134,7 +134,7 @@ We will now define our schema and how our data should be structured. The most ba
 
 #### Instructions
 - declare a variable `PersonType` that is equal to a `new GraphQLObjectType` that takes in an Object
-- this Object requires a `name` property, we will give this a value of `Person`. This defines how our Person Object is structured
+- this Object requires a `name` property, we will give this a value of `Person`. This defines how our Person Object is structured. Now we can add a `fields` property that is a function. This function returns an Object that had the different fields we want on the PersonType Object.
 - let's add `id, name, height` properties to our PersonType Object for now
 
 #### Solution  
