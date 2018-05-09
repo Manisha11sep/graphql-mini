@@ -417,7 +417,7 @@ now that we have our `MovieType` we can add it to our `PersonType`
 
 #### Instructions  
 
-- add a new field, `films`
+- add a new field, `films` to the `PersonType`
 
 - set the `type` to `new GraphQLList(MovieType)`
 
@@ -465,7 +465,17 @@ const PersonType = new GraphQLObjectType({
 
 #### Summary  
 
+we are now going to add another `GraphQLObjectType` for `HomeWorld`
+
 #### Instructions  
+
+- create a variable `HomeWorldType` set to a `new GraphQLObjectType`
+
+- give it a `name` equal to a string `HomeWorld`
+
+- give it a `fields` function
+
+- give the returned `fields` object `name, climate, population` properties, which all can have a string `type`
 
 #### Solution
 
@@ -474,7 +484,105 @@ const PersonType = new GraphQLObjectType({
 <summary><code> server/schema.js </code></summary>
 
 ```js
+// server/schema.js
+// ...
+const HomeWorldType = new GraphQLObjectType({
+  name: 'HomeWorld',
+  fields: () => {
+    return {
+      name: { type: GraphQLString },
+      climate: { type: GraphQLString },
+      population: { type: GraphQLString }
+    }
+  }
+})
+// ...
+```
 
+</details>
+
+<details>
+
+<summary><code> server/schema.js so far </code></summary>
+
+```js
+// server/schema.js
+const axios = require('axios')
+const { 
+  GraphQLSchema,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLInt,
+  GraphQLList,
+  GraphQLNonNull
+ } = require('graphql')
+
+ let characters = require('./model')
+ 
+const PersonType = new GraphQLObjectType({
+  name: 'Person',
+  fields: () => {
+    return {
+      id: { type: GraphQLInt },
+      name: { type: GraphQLString },
+      height: { type: GraphQLInt },
+      films: {
+        type: new GraphQLList(MovieType),
+        resolve: (person) => {
+          return !person.films.length 
+          ? []
+          : person.films.map(film => {
+            return axios.get(film).then(res => res.data)
+          }) 
+        }
+      }
+    }
+  }
+})
+
+const MovieType = new GraphQLObjectType({
+  name: 'Movie',
+  fields: () => {
+    return {
+      title: { type: GraphQLString },
+      releaseDate: { 
+        type: GraphQLString,
+        resolve: person => {
+          return person.release_date
+        } 
+      }
+    }
+  }
+})
+
+const HomeWorldType = new GraphQLObjectType({
+  name: 'HomeWorld',
+  fields: () => {
+    return {
+      name: { type: GraphQLString },
+      climate: { type: GraphQLString },
+      population: { type: GraphQLString }
+    }
+  }
+})
+
+const Query = new GraphQLObjectType({
+  name: 'Query',
+  fields: () => {
+    return {
+      people: {
+        type: new GraphQLList(PersonType),
+        resolve: () => {
+          return characters
+        }
+      }
+    }
+  }
+})
+
+module.exports = new GraphQLSchema({
+  query: Query
+})
 ```
 
 </details>

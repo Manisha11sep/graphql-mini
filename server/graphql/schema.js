@@ -46,6 +46,17 @@ const MovieType = new GraphQLObjectType({
   }
 })
 
+const HomeWorldType = new GraphQLObjectType({
+  name: 'HomeWorld',
+  fields: () => {
+    return {
+      name: { type: GraphQLString },
+      climate: { type: GraphQLString },
+      population: { type: GraphQLString }
+    }
+  }
+})
+
 const Query = new GraphQLObjectType({
   name: 'Query',
   fields: () => {
