@@ -101,13 +101,13 @@ const Mutation = new GraphQLObjectType({
         return{
             deletePerson:{
                 type:PersonType,
-                args:{id :{type: GraphQlNonNull(GraphQlInt)}},
+                args:{id :{type: GraphQLNonNull(GraphQLInt)}},
                 resolve:(parentVal,args)=>{
                     let character = characters.find(person => person.id === args.id)
                     characters=characters.filter(person => person.id!==args.id)
                     return {
                         id:character.id,
-                        name:charcter.name
+                        name:character.name
                     }
                 }
             }
@@ -117,5 +117,6 @@ const Mutation = new GraphQLObjectType({
 
 
 module.exports = new GraphQLSchema({
-    query : Query
+    query : Query,
+    mutation : Mutation
 })

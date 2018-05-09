@@ -1,7 +1,9 @@
+// components/App.js
 import React, { Component } from 'react'
-import List from './List'
 import Header from './header/Header'
 import Tech from './header/Tech'
+import List from './List'
+import PeopleQuery from './../queries/PeopleQuery'
 
 export default class App extends Component {
   render() {
@@ -21,7 +23,9 @@ export default class App extends Component {
             image='https://www.qualium-systems.com/wp-content/uploads/2015/07/icon-reactjs.svg'
           />
         </Header>
-        {/* Display list of fetched data */}
+        <div>
+          <PeopleQuery render={ data => <List list={ data.people } /> } />
+        </div>
       </div>
     )
   }
