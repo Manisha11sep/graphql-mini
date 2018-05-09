@@ -6,6 +6,9 @@
 
 >GraphQL APIs are organized in terms of types and fields, not endpoints. It uses types to ensure a client only asks for what's possible and provides clear and helpful errors.  
 
+With GraphQL we create a data model, or Schema  
+> Schema: A representation of a plan or theory in the form of a model
+
 ### What is Apollo?  
 
 >Apollo Client is a library that was built for seemlessly interacting with GraphQL on the client side.
@@ -68,7 +71,7 @@ Starting with the server side, we need to add our dependencies
 
 #### Summary  
 
-Now let's require these dependencies in the server and have our app use it
+Now let's require these dependencies in the server and use them
 
 #### Instructions  
 
@@ -83,7 +86,7 @@ Now let's require these dependencies in the server and have our app use it
 ```js
 // ? = optional
 graphqlHTTP({
-  schema: schema, // <-- required
+  schema: YOUR_SCHEMA, // <-- required
   graphiql?: ?boolean,
   rootValue?: ?any,
   context?: ?any,
@@ -117,16 +120,22 @@ app.use('/graphql', graphqlHTTP({
 ### Step 3  
 
 #### Summary  
-Let's setup our query file, where most of our logic will take place
+
+Let's setup our schema, where most of our logic will take place  
 
 #### Instructions  
-- inside `server/graphql`, create a file named `schema.js`
-- we need to access our data, so `require` our `server/graphql/model.js` inside `schema.js`
-- we need to `require` `graphql` and destructure a handful of functions
-  - `{ GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLNonNull }`
-- let's also take another look at our `server/index.js` file and `require` our newly created `schema.js` file then add this to the schema property inside of the configuration Object  
+
+- inside `server/graphql`, create a file named `schema.js`  
+
+- we need to access our data, so `require` our `server/graphql/model.js` inside `schema.js`  
+
+- we need to require `graphql` and destructure a handful of functions  
+  - `{ GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLNonNull }`  
+
+- at the bottom of our `schema.js` let's export a `new GraphQLSchema({ query: Query })`  
 
 #### Solution  
+
 <details>  
 
 <summary><code> server/schema.js </code></summary>  
@@ -145,7 +154,21 @@ let characters = require('./model')
 // ...
 ```  
 
-</details>  
+</details>    
+
+### Step 4  
+
+#### Summary  
+
+We need to require our `schema.js` file inside our `index.js` server file in order for `graphqlHTTP` to access it via the `schema` property
+
+#### Instructions  
+
+- require `schema.js` inside `server/index.js` and save it to a variable named `schema`  
+
+- add the `schema` variable to the `schema` property on `graphqlHTTP`
+
+#### Solution  
 
 <details>  
 
@@ -163,60 +186,22 @@ app.use('/graphql', graphQLExpress({
 // ...
 ```  
 
-</details>  
-
-### Step 4  
-
-#### Summary  
-These functions we have `required` from `graphql` are going to help us define our types when we create our `GraphQLSchema`.
-> Schema: A representation of a plan or theory in the form of an outline or model
-
-We will now define our schema and how our data should be structured. The most basic components of a GraphQL schema are Object types, which represent a kind of Object you can fetch from your service/API and what fields it has. Let's create a `person` Object
-
-#### Instructions
-- declare a variable `PersonType` that is equal to a `new GraphQLObjectType` that takes in an Object
-- this Object requires a `name` property, we will give this a value of `'Person'`. Now we can add a `fields` property that is a function. This function returns an Object that had the different fields we want on the PersonType Object.
-- let's add `id, name, height` properties to our PersonType Object for now
-
-#### Notes
-- Making `fields` an arrow function allows you to refer to an ObjectType that is defined later in the file
-
-#### Solution  
-<details>
-<summary><code> server/schema.js </code></summary>
-
-```js
-// server/schema.js
-// ...
-const PersonType = new GraphQLObjectType({
-  name: 'Person',
-  fields: () => {
-    return {
-      id: { type: GraphQLInt },
-      name: { type: GraphQLString },
-      height: { type: GraphQLInt }
-    }
-  }
-})
-```
-
 </details>
 
 ### Step 5  
 
-#### Summary
+#### Summary  
+
+Back to `schema.js`, we are going to create our root query Object
 
 #### Instructions  
 
-#### Solution  
-<details>
-<summary><code></code></summary>
+- create a variable named `Query` and set it equal to a `new GraphQLObjectType()`  
 
-```js
-// ...
+- inside the `GraphQLObjectType`, provide it an Object with:
+  - a `name` property equal to `Query`  
+  - a `fields` property equal to a function that returns an Object
+    - this is where we declare the data fields that can be accessed on the API
 
-```
-
-</details>
-
+#### Solution
 
