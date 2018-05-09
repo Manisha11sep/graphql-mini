@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import Header from './header/Header'
 import Tech from './header/Tech'
-
-// ADD THESE
-import PeopleQuery from './queries/PeopleQuery'
 import List from './List'
+import PeopleQuery from './queries/PeopleQuery'
 
 export default class App extends Component {
   render() {
