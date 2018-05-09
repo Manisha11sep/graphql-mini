@@ -998,7 +998,7 @@ lets start with the `PeopleQuery` component, we need to create the query and ren
 
 - create a stateless component `PeopleQuery`
 
-- `import { Query } from 'react-apollo'` && `import gql from 'graphql-tag'`
+- `import { Query } from 'react-apollo'` && `import { gql } from 'graphql-tag'`
   - graphql-tag will allow us to write a template literal tag, explained by example inside `templateLiteralTagExample.js`
 
 - below our imports but above our component, create a variable `GET_PEOPLE` and set it equal to our people query with our desired properties:
@@ -1040,7 +1040,7 @@ const GET_PEOPLE = gql`
 // queries/PeopleQuery.js
 import React from 'react'
 import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
+import { gql } from 'graphql-tag'
 
 const GET_PEOPLE = gql`
   query getPeople {
@@ -1192,7 +1192,7 @@ time to see this working!
 
 <details>
 
-<summary><code></code></summary>
+<summary><code> components/App.js </code></summary>
 
 ```js
 // components/App.js
@@ -1227,6 +1227,194 @@ export default class App extends Component {
     )
   }
 }
+```
+
+</details>
+
+### Step 7
+
+#### Summary  
+
+All we have left is to create our `DeletePerson` component and implement it!
+
+#### Instructions  
+
+- create a stateless component named `DeletePerson`
+
+- `import { Mutation } from 'react-apollo'`
+
+- `import { gql } from 'graphql-tag'`
+
+- back in `queries/PeopleQuery` let's export `GET_PEOPLE`
+
+- `import { GET_PEOPLE } from '../queries/PeopleQuery'`
+
+#### Solution
+
+<details>
+
+<summary><code> mutations/DeletePerson.js </code></summary>
+
+```js
+// mutations/DeletePerson.js
+import React from 'react'
+import { Mutation } from 'react-apollo'
+import { gql } from 'apollo-boost'
+import { GET_PEOPLE } from '../queries/PeopleQuery'
+
+const DeletePerson = props => {
+  return (
+    
+  )
+}
+
+export default DeletePerson
+```
+
+</details>
+
+### Step 8
+
+#### Summary
+
+let's create our mutation  
+
+#### Instructions  
+
+- create a variable `DELETE_PERSON` and set it equal to the `gql` function
+
+- using a template literal tag, define the mutation:
+```js
+mutation deletePerson($id: Int!) { // Variable: id, Integer REQUIRED
+  deletePerson(id: $id) {
+    id
+    name
+  }
+}
+```
+
+#### Solution
+
+<details>
+
+<summary><code> mutations/DeletePerson.js </code></summary>
+
+```js
+// mutations/DeletePerson.js
+import React from 'react'
+import { Mutation } from 'react-apollo'
+import { gql } from 'apollo-boost'
+import { GET_PEOPLE } from '../queries/PeopleQuery'
+
+export const DELETE_PERSON = gql`
+  mutation deletePerson($id: Int!) {
+    deletePerson(id: $id) {
+      id
+      name
+    }
+  }
+`
+
+const DeletePerson = props => {
+  return (
+    
+  )
+}
+
+export default DeletePerson
+```
+
+</details>
+
+### Step 9
+
+#### Summary  
+
+time to make the functionality of the component!
+
+#### Instructions  
+
+- return the `Mutation` component
+  - the `Mutation` component again, follows the render prop pattern
+
+- give `Mutation` a `mutation` prop equal to the `DELETE_PERSON` variable
+
+- we also need to provided an `update` prop
+  - this is necessary when adding or deleting. `ApolloClient` uses a cache to be more efficient and we need to tell it to update the cache when we make a change
+
+- `update` is called with `cache` as the first argument, and the second is an Object with a `data` property containing your mutation result:
+```js
+<Mutation
+  mutation={ DELETE_PERSON }
+  update={(cache, { data: { deletePerson } }) => {
+    // code
+  }}
+>
+
+</Mutation>
+```
+
+- `cache` has several utility functions that are useful, we are interested in `.readQuery()` and `.writeQuery()`
+
+- destructure `people` from the result of `cache.readQuery({ query: GET_PEOPLE })` inside the `update` prop:
+```js
+let { people } = cache.readQuery({ query: GET_PEOPLE })
+```
+
+- now that we have the people array from the cache, we can alter it and write an updated cache:
+```js
+const updatedPeople = people.filter(person => person.id !== deletePerson.id)
+```
+
+- then we can write this back to the cache:
+```js
+cache.writeQuery({
+  query: GET_PEOPLE,
+  data: { people: updatedPeople }
+})
+```
+
+#### Solution
+
+<details>
+
+<summary><code> mutations/DeletePerson.js </code></summary>
+
+```js
+// mutations/DeletePerson.js
+import React from 'react'
+import { Mutation } from 'react-apollo'
+import { gql } from 'apollo-boost'
+import { GET_PEOPLE } from '../queries/PeopleQuery'
+
+export const DELETE_PERSON = gql`
+  mutation deletePerson($id: Int!) {
+    deletePerson(id: $id) {
+      id
+      name
+    }
+  }
+`
+
+const DeletePerson = props => {
+  return (
+    <Mutation
+      mutation={ DELETE_PERSON }
+      update={(cache, { data: { deletePerson } }) => {
+        let { people } = cache.readQuery({ query: GET_PEOPLE })
+        const updatedPeople = people.filter(e => e.id !== deletePerson.id)
+        cache.writeQuery({ 
+          query: GET_PEOPLE,
+          data: { people: updatedPeople }
+        })
+      }}
+    >
+      // code
+    </Mutation>
+  )
+}
+
+export default DeletePerson
 ```
 
 </details>
