@@ -86,7 +86,8 @@ Let's setup our query file, where most of our logic will take place
 - let's also take another look at our `server/index.js` file and `require` our newly created `schema.js` file then add this to the schema property inside of the configuration Object  
 
 #### Solution  
-<details>
+<details>  
+
 <summary><code> server/schema.js </code></summary>  
 
 ```js
@@ -103,8 +104,10 @@ let characters = require('./model')
 // ...
 ```  
 
-</details>
-<details>
+</details>  
+
+<details>  
+
 <summary><code> server/index.js </code></summary>  
 
 ```js
@@ -117,7 +120,7 @@ app.use('/graphql', graphQLExpress({
   graphiql: true
 }))
 // ...
-```
+```  
 
 </details>
 
