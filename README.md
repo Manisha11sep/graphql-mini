@@ -338,6 +338,8 @@ now let's create another `type` that we can add to our `PersonType` later
 
 - with the `name` set to a string `Movie`
 
+- copy a link from the `films` Array and make a call to see the API structure and details for each film
+
 - add `name, releaseDate` properties and their respective `type`'s
 
 #### Solution
@@ -367,11 +369,15 @@ const MovieType = new GraphQLObjectType({
 
 #### Summary  
 
-because the films property on our data inside `model.js` is an Array of API links, we need to make an `axios` call to fetch the details
+because we named our propery `releaseDate` instead of `release_date` like the original API has it as, we need to convert it with a `resolve` function
 
 #### Instructions  
 
-- 
+- add a `resolve` function to the `releaseDate` property
+
+- add `person` as an argument for `resolve`, this refers to the parent value  
+
+- return `person.release_date`
 
 #### Solution
 
@@ -380,8 +386,73 @@ because the films property on our data inside `model.js` is an Array of API link
 <summary><code></code></summary>
 
 ```js
-
+//server/schema.js
+// ...
+const MovieType = new GraphQLObjectType({
+  name: 'Movie',
+  fields: () => {
+    return {
+      name: { type: GraphQLString },
+    // start new code
+      releaseDate: { 
+        type: GraphQLString,
+        resolve: person => {
+          return person.release_date
+        } 
+      }
+    // end new code
+    }
+  }
+})
+// ...
 ```
 
 </details>
 
+### Step 10
+
+#### Summary 
+
+now that we have our `MovieType` we can add it to our `PersonType`
+
+#### Instructions  
+
+- add a new field, `films`
+
+- set the `type` to `new GraphQLList(MovieType)`
+
+- add a `resolve` function so we can make an axios call for the detailed information from the original API
+
+#### Solution
+
+<details>
+
+<summary><code></code></summary>
+
+```js
+//server/schema.js
+// ...
+const PersonType = new GraphQLObjectType({
+  name: 'Person',
+  fields: () => {
+    return {
+      id: { type: GraphQLInt },
+      name: { type: GraphQLString },
+      height: { type: GraphQLInt },
+      films: {
+        type: new GraphQLList(MovieType),
+        resolve: (person) => {
+          return !person.films.length 
+          ? []
+          : person.films.map(film => {
+            return axios.get(film).then(res => res.data)
+          }) 
+        }
+      }
+    }
+  }
+})
+// ...
+```
+
+</details>

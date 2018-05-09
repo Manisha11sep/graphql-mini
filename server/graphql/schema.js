@@ -15,7 +15,17 @@ const PersonType = new GraphQLObjectType({
     return {
       id: { type: GraphQLInt },
       name: { type: GraphQLString },
-      height: { type: GraphQLInt }
+      height: { type: GraphQLInt },
+      films: {
+        type: new GraphQLList(MovieType),
+        resolve: (person) => {
+          return !person.films.length 
+          ? []
+          : person.films.map(film => {
+            return axios.get(film).then(res => res.data)
+          }) 
+        }
+      }
     }
   }
 })
@@ -25,7 +35,12 @@ const MovieType = new GraphQLObjectType({
   fields: () => {
     return {
       name: { type: GraphQLString },
-      releaseDate: { type: GraphQLString }
+      releaseDate: { 
+        type: GraphQLString,
+        resolve: person => {
+          return person.release_date
+        } 
+      }
     }
   }
 })
