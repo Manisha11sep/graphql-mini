@@ -48,7 +48,7 @@ Now let's require these dependencies in the server and have our app use it
 
 #### Instructions
 - require `express-graphql` as `graphQLExpress` in your server
-- apply `graphQLExpress` as top-level middleware as a route handler >`app.use()`
+- apply `graphQLExpress` as top-level middleware as a route handler `app.use()`
 - the first argument should be an endpoint `/graphql` and the second argument should be `graphQLExpress` invoked with a configuration Object as an argument
 - inside the configuration Object:
   - a `schema` property must be provided, and the value will be our schema, for now set it to `null`
@@ -83,5 +83,40 @@ Let's setup our query file, where most of our logic will take place
 - we need to access our data, so `require` our `server/graphql/model.js` inside `schema.js`
 - we need to `require` `graphql` and destructure a handful of functions
   - `{ GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLNonNull }`
-- let's also take another look at our `server/index.js` file and `require` our newly created `schema.js` file then add this to the schema property inside of the configuration Object
+- let's also take another look at our `server/index.js` file and `require` our newly created `schema.js` file then add this to the schema property inside of the configuration Object  
+
+#### Solution  
+<details>
+<summary><code> server/schema.js </code></summary>  
+
+```js
+// server/schema.js
+const {
+  GraphQLSchema, 
+  GraphQLObjectType, 
+  GraphQLString, 
+  GraphQLInt, 
+  GraphQLList, 
+  GraphQLNonNull 
+} = require('graphql')
+let characters = require('./model')
+// ...
+```  
+
+<summary><code> server/schema.js </code></summary>  
+
+```js
+// server/index.js
+// ...
+const schema = require('./graphql/schema')
+// ...
+app.use('/graphql', graphQLExpress({
+  schema: schema, // <-- add schema to configuration Object
+  graphiql: true
+}))
+// ...
+```
+
+</details>
+
 
