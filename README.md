@@ -235,11 +235,11 @@ module.exports = new GraphQLSchema({
 
 ### Step 6  
 
-### Summary  
+#### Summary  
 
 Our data is full of Star Wars characters so let's create a `people` query so we can fetch all people
 
-### Instructions  
+#### Instructions  
 
 - inside our `fields` Object, add a property called `people` and set it to an empty Object  
 
@@ -249,7 +249,7 @@ Our data is full of Star Wars characters so let's create a `people` query so we 
 
 - we want the `resolve` function to return all `characters`
 
-### Solution
+#### Solution
 
 <details>
 
@@ -346,7 +346,7 @@ now let's create another `type` that we can add to our `PersonType` later
 
 <details>
 
-<summary><code></code></summary>
+<summary><code> server/schema.js </code></summary>
 
 ```js
 // server/schema.js
@@ -383,7 +383,7 @@ because we named our propery `releaseDate` instead of `release_date` like the or
 
 <details>
 
-<summary><code></code></summary>
+<summary><code> server/schema.js </code></summary>
 
 ```js
 //server/schema.js
@@ -423,11 +423,13 @@ now that we have our `MovieType` we can add it to our `PersonType`
 
 - add a `resolve` function so we can make an axios call for the detailed information from the original API
 
+- `yarn add axios` and require `axios` inside `schema.js`
+
 #### Solution
 
 <details>
 
-<summary><code></code></summary>
+<summary><code> server/schema.js </code></summary>
 
 ```js
 //server/schema.js
@@ -442,8 +444,10 @@ const PersonType = new GraphQLObjectType({
       films: {
         type: new GraphQLList(MovieType),
         resolve: (person) => {
+          // if films array is empty return an empty array
           return !person.films.length 
           ? []
+          // otherwise map over it and make the axios call for each link
           : person.films.map(film => {
             return axios.get(film).then(res => res.data)
           }) 
@@ -453,6 +457,24 @@ const PersonType = new GraphQLObjectType({
   }
 })
 // ...
+```
+
+</details>
+
+### Step 11
+
+#### Summary  
+
+#### Instructions  
+
+#### Solution
+
+<details>
+
+<summary><code> server/schema.js </code></summary>
+
+```js
+
 ```
 
 </details>

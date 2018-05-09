@@ -1,3 +1,4 @@
+const axios = require('axios')
 const { 
   GraphQLSchema,
   GraphQLObjectType,
@@ -34,7 +35,7 @@ const MovieType = new GraphQLObjectType({
   name: 'Movie',
   fields: () => {
     return {
-      name: { type: GraphQLString },
+      title: { type: GraphQLString },
       releaseDate: { 
         type: GraphQLString,
         resolve: person => {
@@ -62,11 +63,3 @@ const Query = new GraphQLObjectType({
 module.exports = new GraphQLSchema({
   query: Query
 })
-
-// person: {
-  //   type: PersonType,
-  //   args: { id: { type: new GraphQLNonNull(GraphQLInt)} },
-  //   resolve: (person, args) => {
-    //     return characters.find(e => e.id === args.id)
-    //   }
-    // }
