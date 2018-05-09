@@ -916,7 +916,7 @@ we need to give our application access to the Apollo Client
 - give `ApolloClient` a configuration Object with a `uri` property set to our local server graphql endpoint `http://localhost:3050/graphql`
 
 - to test, let's import `gql` from `graphql-tag` and write a query now:
-```js
+```
 client.query({
 	query: gql`
 		{
