@@ -940,6 +940,64 @@ client.query({
 
 <details>
 
+<summary><code> src/index.js </code></summary>
+
+```js
+// src/index.js
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './components/App'
+import './index.css'
+import ApolloClient from 'apollo-boost'
+import gql from 'graphql-tag' // we don't need this anymore after a successful test
+import { ApolloProvider } from 'react-apollo'
+
+const client = new ApolloClient({
+	uri: 'http://localhost:3050/graphql'
+})
+
+// we can delete this query
+client.query({
+	query: gql`
+		{
+			people {
+				name
+			}
+		}
+	`
+})
+	.then(res => console.log(res.data))
+// ----
+
+ReactDOM.render(
+	<ApolloProvider client={ client }>
+		<App />
+	</ApolloProvider>, document.getElementById('root')
+)
+```
+
+</details>
+
+### Step 3
+
+#### Instructions  
+
+- create `queries` and `mutations` folders inside `src/components`
+
+- create a `PeopleQuery` component inside the `queries` folder
+
+- create a `DeletePersonMutation` component inside the `mutations` folder     
+
+### Step 4
+
+#### Summary  
+
+#### Instructions  
+
+#### Solution
+
+<details>
+
 <summary><code></code></summary>
 
 ```js
