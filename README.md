@@ -643,6 +643,74 @@ const PersonType = new GraphQLObjectType({
 
 #### Summary  
 
+lets add a `person` query so we can get a specific character
+
+#### Instructions  
+
+- after our `people` field on `Query` add another field, `person`
+
+- `type` should be equal to `PersonType`
+
+- add an `args` property so that we can give our `resolve` some arguments to find a specific character
+
+- the `args` we need is an `id`, and each argument also needs a `type`
+
+- the `type` should specify that it cannot be `null` like so:
+```js
+// ...
+person: {
+  type: PersonType,
+  args: { id: { type: GraphQLNonNull(GraphQLInt) } }
+}
+// ...
+```
+
+- now add a `resolve` that takes in `args` as a second parameter so that it has access to the id:
+```js
+resolve: (person, args) => {
+  console.log(person)
+  return characters.find(person => person.id === args.id)
+}
+```
+
+#### Solution
+
+<details>
+
+<summary><code> server/schema.js </code></summary>
+
+```js
+// server/schema.js
+// ...
+const Query = new GraphQLObjectType({
+  name: 'Query',
+  fields: () => {
+    return {
+      people: {
+        type: new GraphQLList(PersonType),
+        resolve: () => {
+          return characters
+        }
+      },
+      person: {
+        type: PersonType,
+        args: { id: { type: GraphQLNonNull(GraphQLInt) } },
+        resolve: (parentVal, args) => {
+          return characters.find(person => person.id === args.id)
+        }
+      }
+    }
+  }
+})
+// ...
+```
+
+</details>
+
+### Step 14
+
+#### Summary  
+
 now that you can see how it can be used to stucture your data, let's see about mutating the data
 
 #### Instructions  

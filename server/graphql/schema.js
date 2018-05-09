@@ -73,6 +73,13 @@ const Query = new GraphQLObjectType({
         resolve: () => {
           return characters
         }
+      },
+      person: {
+        type: PersonType,
+        args: { id: { type: GraphQLNonNull(GraphQLInt) } },
+        resolve: (parentVal, args) => {
+          return characters.find(person => person.id === args.id)
+        }
       }
     }
   }
