@@ -278,13 +278,13 @@ const Query = new GraphQLObjectType({
 
 </details>  
 
-### Step 6
+### Step 7
 
-### Summary  
+#### Summary  
 
 We need to define our `PersonType` so our `people` query knows how to structure the data properly
 
-### Instructions  
+#### Instructions  
 
 - create a variable called `PersonType` and set it equal to a `new GraphQLObjectType()`  
 
@@ -302,7 +302,7 @@ const PersonType = new GraphQLObjectType({
 
 - these properties require a `type` definition 
 
-### Solution
+#### Solution
 
 <details>
 
@@ -322,6 +322,65 @@ const PersonType = new GraphQLObjectType({
   }
 })
 // ...
+```
+
+</details>
+
+### Step 8
+
+#### Summary  
+
+now let's create another `type` that we can add to our `PersonType` later
+
+#### Instructions
+
+- create a mew variable `MovieType`
+
+- with the `name` set to a string `Movie`
+
+- add `name, releaseDate` properties and their respective `type`'s
+
+#### Solution
+
+<details>
+
+<summary><code></code></summary>
+
+```js
+// server/schema.js
+// ...
+const MovieType = new GraphQLObjectType({
+  name: 'Movie',
+  fields: () => {
+    return {
+      name: { type: GraphQLString },
+      releaseDate: { type: GraphQLString }
+    }
+  }
+})
+// ...
+```
+
+</details>
+
+### Step 9
+
+#### Summary  
+
+because the films property on our data inside `model.js` is an Array of API links, we need to make an `axios` call to fetch the details
+
+#### Instructions  
+
+- 
+
+#### Solution
+
+<details>
+
+<summary><code></code></summary>
+
+```js
+
 ```
 
 </details>

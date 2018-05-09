@@ -20,6 +20,16 @@ const PersonType = new GraphQLObjectType({
   }
 })
 
+const MovieType = new GraphQLObjectType({
+  name: 'Movie',
+  fields: () => {
+    return {
+      name: { type: GraphQLString },
+      releaseDate: { type: GraphQLString }
+    }
+  }
+})
+
 const Query = new GraphQLObjectType({
   name: 'Query',
   fields: () => {

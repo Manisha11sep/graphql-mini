@@ -41,11 +41,11 @@ const PersonType = new GraphQLObjectType({
 
 ### Step 6
 
-### Summary  
+#### Summary  
 
-### Instructions  
+#### Instructions  
 
-### Solution
+#### Solution
 
 <details>
 
