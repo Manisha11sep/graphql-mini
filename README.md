@@ -667,9 +667,8 @@ person: {
 
 - now add a `resolve` that takes in `args` as a second parameter so that it has access to the id:
 ```js
-resolve: (person, args) => {
-  console.log(person)
-  return characters.find(person => person.id === args.id)
+resolve: (parentVal, args) => {
+  // code
 }
 ```
 
@@ -847,6 +846,13 @@ const Query = new GraphQLObjectType({
         type: new GraphQLList(PersonType),
         resolve: () => {
           return characters
+        }
+      },
+      person: {
+        type: PersonType,
+        args: { id: { type: GraphQLNonNull(GraphQLInt) } },
+        resolve: (parentVal, args) => {
+          return characters.find(person => person.id === args.id)
         }
       }
     }
