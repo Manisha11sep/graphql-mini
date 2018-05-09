@@ -197,7 +197,7 @@ Back to `schema.js`, we are going to create our root query Object
 - create a variable named `Query` and set it equal to a `new GraphQLObjectType()`  
 
 - inside the `GraphQLObjectType`, provide it an Object with:
-  - a `name` property equal to `Query`  
+  - a `name` property equal to a string `Query`  
   - a `fields` property equal to a function that returns an Object
     - this is where we declare the queries available on the API  
 
@@ -229,6 +229,49 @@ const Query = new GraphQLObjectType({
 module.exports = new GraphQLSchema({
   query: Query
 })
+```
+
+</details>  
+
+### Step 6  
+
+### Summary  
+
+Our data is full of Star Wars characters so let's create a `people` query so we can fetch all people
+
+### Instructions  
+
+- inside our `fields` Object, add a property called `people` and set it to an empty Object  
+
+- inside our `people` Object, give it a `type` property. This defines how the query should be structured. In this case we want a `new GraphQLList()` of `PersonType`, we will define the `PersonType` in the next step
+
+- now let's add a `resolve` property that is a function. This is where we can do our functionality for the query.
+
+- we want the `resolve` function to return all `characters`
+
+### Solution
+
+<details>
+
+<summary><code></code></summary>
+
+```js
+// server/schema.js
+// ...
+const Query = new GraphQLObjectType({
+  name: 'Query',
+  fields: () => {
+    return {
+      people: {
+        type: new GraphQLList(PersonType),
+        resolve: () => {
+          return characters
+        }
+      }
+    }
+  }
+})
+// ...
 ```
 
 </details>

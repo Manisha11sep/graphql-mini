@@ -34,3 +34,25 @@ const PersonType = new GraphQLObjectType({
 ```
 
 </details>
+
+
+
+
+
+### Step 6
+
+### Summary  
+
+### Instructions  
+
+### Solution
+
+<details>
+
+<summary><code></code></summary>
+
+```js
+
+```
+
+</details>
