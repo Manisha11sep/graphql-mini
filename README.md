@@ -34,7 +34,7 @@
 - Run `yarn` or `npm install`
 
 ### Step 1
-- Starting with the server side, we need to add our dependencies
+Starting with the server side, we need to add our dependencies
 
 #### Instructions
 - `yarn add graphql`
@@ -50,7 +50,9 @@ Now let's require these dependencies in the server and have our app use it
 - require `express-graphql` as `graphQLExpress` in your server
 - apply `graphQLExpress` as top-level middleware as a route handler
 - the first argument should be an endpoint `/graphql` and the second argument should be `graphQLExpress` invoked with a configuration Object as an argument
-- inside the configuration Object, a `schema` property must be provided, and the value will be our schema
+- inside the configuration Object:
+  - a `schema` property must be provided, and the value will be our schema, for now set it to `null`
+  - a `graphiql` property which takes a `boolean` and will enable or disable a user interface to quickly test queries. Let's set this to `true`
 
 <details>  
   
@@ -60,6 +62,10 @@ Now let's require these dependencies in the server and have our app use it
 // server/index.js
 const graphQLExpress = require('express-graphql')
 // ...
+app.use('/graphql', graphQLExpress({
+  schema: null,
+  graphiql: true
+}))
 ```  
 
 </details>
